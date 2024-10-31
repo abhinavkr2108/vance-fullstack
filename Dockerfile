@@ -5,10 +5,13 @@ FROM ghcr.io/puppeteer/puppeteer:19.7.2
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
 
+# Ensure commands are run as root to have the necessary permissions
+USER root
+
 # Create a new user and set it as the active user
 RUN useradd -m appuser
 
-# Switch to the new user
+# Switch to the new user for subsequent commands
 USER appuser
 
 # Set the working directory
@@ -28,6 +31,3 @@ COPY --chown=appuser:appuser . .
 
 # Generate Prisma client (adjusted schema path)
 RUN npx prisma generate --schema=backend/prisma/schema.prisma
-
-# Set the command to start the application
-CMD ["node", "backend/index.js"]
