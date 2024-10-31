@@ -50,7 +50,7 @@ export default function Task1Page() {
   const fetchData = async () => {
     const quote = `${currencyOne}${currencyTwo}=X`;
     toast.promise(
-      axios.post("http://localhost:5000/api/scrape", {
+      axios.post("https://vance-fullstack.onrender.com/api/scrape", {
         quote,
         fromDate: Math.floor(fromDate.getTime() / 1000),
         toDate: Math.floor(toDate.getTime() / 1000),

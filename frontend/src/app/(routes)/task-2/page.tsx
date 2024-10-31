@@ -64,7 +64,7 @@ export default function Task2Page() {
     const quote = `${currencyOne}${currencyTwo}=X`;
 
     toast.promise(
-      axios.post("http://localhost:5000/api/forex-data", {
+      axios.post("https://vance-fullstack.onrender.com/api/forex-data", {
         quote,
         fromDate: Math.floor(fromDate.getTime() / 1000),
         toDate: Math.floor(toDate.getTime() / 1000),
