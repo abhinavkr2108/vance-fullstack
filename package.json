@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon backend/index.js",
-    "build": "npm install && npx prisma generate --prefix backend && pnpm install --prefix frontend && npm run build --prefix frontend",
+    "build": "npm install && npx prisma generate --cwd backend && pnpm install --prefix frontend && npm run build --prefix frontend",
     "start": "node backend/index.js"
   },
   "keywords": [],
