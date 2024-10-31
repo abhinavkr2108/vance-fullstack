@@ -42,6 +42,7 @@ app.post("/api/scrape", async (req, res) => {
 
   try {
     const browser = await puppeteer.launch({
+      executablePath: puppeteer.executablePath("chrome"),
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
     const page = await browser.newPage();
@@ -94,6 +95,7 @@ app.post("/api/forex-data", async (req, res) => {
 
   try {
     const browser = await puppeteer.launch({
+      executablePath: puppeteer.executablePath("chrome"),
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
     const page = await browser.newPage();
@@ -184,6 +186,7 @@ async function scrapeData(quote, period) {
   )}/history?period1=${fromDate}&period2=${toDate}`;
 
   const browser = await puppeteer.launch({
+    executablePath: puppeteer.executablePath("chrome"),
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
   const page = await browser.newPage();
