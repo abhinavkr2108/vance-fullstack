@@ -6,7 +6,7 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
 
 # Create a new user and set it as the active user
-RUN useradd -m appuser
+RUN --user=root useradd -m appuser
 USER appuser
 
 # Set the working directory
