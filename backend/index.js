@@ -5,6 +5,8 @@ import cron from "node-cron";
 import path from "path";
 // npx prisma generate
 import { PrismaClient } from "@prisma/client";
+import dotenv from "dotenv";
+dotenv.config();
 
 const corsOptions = {
   origin: "*",
@@ -42,7 +44,16 @@ app.post("/api/scrape", async (req, res) => {
 
   try {
     const browser = await puppeteer.launch({
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      executablePath:
+        process.env.NODE_ENV === "production"
+          ? process.env.PUPPETEER_EXECUTABLE_PATH
+          : puppeteer.executablePath(),
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--single-process",
+        "--no-zygote",
+      ],
     });
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "networkidle2" });
@@ -94,7 +105,16 @@ app.post("/api/forex-data", async (req, res) => {
 
   try {
     const browser = await puppeteer.launch({
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      executablePath:
+        process.env.NODE_ENV === "production"
+          ? process.env.PUPPETEER_EXECUTABLE_PATH
+          : puppeteer.executablePath(),
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--single-process",
+        "--no-zygote",
+      ],
     });
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "networkidle2" });
@@ -184,7 +204,16 @@ async function scrapeData(quote, period) {
   )}/history?period1=${fromDate}&period2=${toDate}`;
 
   const browser = await puppeteer.launch({
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    executablePath:
+      process.env.NODE_ENV === "production"
+        ? process.env.PUPPETEER_EXECUTABLE_PATH
+        : puppeteer.executablePath(),
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--single-process",
+      "--no-zygote",
+    ],
   });
   const page = await browser.newPage();
   await page.goto(url, { waitUntil: "networkidle2" });
