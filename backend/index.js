@@ -17,7 +17,11 @@ const app = express();
 
 const __dirname = path.resolve();
 
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 app.use(express.json());
 
