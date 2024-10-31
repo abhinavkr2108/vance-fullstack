@@ -8,26 +8,20 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
 # Set the working directory
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json (or yarn.lock) for the backend
-COPY backend/package*.json ./backend/
-
-# Copy package.json for the frontend
-COPY frontend/package*.json ./frontend/
+# Copy package.json and package-lock.json (or yarn.lock) to the working directory
+COPY package*.json ./
 
 # Install backend dependencies
-RUN npm install --prefix ./backend
-
-# Install frontend dependencies
-RUN npm install --prefix ./frontend
+RUN npm install
 
 # Install Puppeteer browsers (if needed)
 RUN npx puppeteer install chrome
 
 # Generate Prisma client
-RUN npx prisma generate --schema=backend/prisma/schema.prisma
+RUN npx prisma generate --schema=prisma/schema.prisma
 
 # Copy the rest of your application code
 COPY . .
 
 # Set the command to start the application
-CMD ["node", "backend/index.js"]
+CMD ["node", "index.js"]
