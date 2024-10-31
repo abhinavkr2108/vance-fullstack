@@ -41,7 +41,10 @@ app.post("/api/scrape", async (req, res) => {
   )}/history?period1=${fromDate}&period2=${toDate}`;
 
   try {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      executablePath: "/usr/bin/google-chrome-stable",
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "networkidle2" });
 
@@ -91,7 +94,10 @@ app.post("/api/forex-data", async (req, res) => {
   )}/history?period1=${fromDate}&period2=${toDate}`;
 
   try {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      executablePath: "/usr/bin/google-chrome-stable",
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "networkidle2" });
 
@@ -179,7 +185,10 @@ async function scrapeData(quote, period) {
     quote
   )}/history?period1=${fromDate}&period2=${toDate}`;
 
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    executablePath: "/usr/bin/google-chrome-stable",
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
   const page = await browser.newPage();
   await page.goto(url, { waitUntil: "networkidle2" });
 
