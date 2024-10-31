@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon backend/index.js",
-    "build": "apt-get update && apt-get install -y fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 libcups2 libdbus-1-3 libdrm2 libgbm1 libgtk-3-0 libnspr4 libnss3 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libxshmfence1 xdg-utils wget chromium && npm install && npx puppeteer browsers install chrome && npx puppeteer install chrome && npx prisma generate --schema=backend/prisma/schema.prisma && pnpm install --prefix frontend && npm run build --prefix frontend",
+    "build": "npm install && npx puppeteer browsers install chrome &&  npx puppeteer install chrome && npx prisma generate --schema=backend/prisma/schema.prisma && pnpm install --prefix frontend && npm run build --prefix frontend",
     "start": "node backend/index.js"
   },
   "keywords": [],
