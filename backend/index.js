@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import cron from "node-cron";
 import path from "path";
+// npx prisma generate
 import { PrismaClient } from "@prisma/client";
 
 const corsOptions = {
