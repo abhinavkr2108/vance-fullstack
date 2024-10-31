@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { TrendingUp } from "lucide-react";
 import {
   CartesianGrid,
@@ -17,7 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Modify the interface to include openPrice
 interface DataPoint {
@@ -80,6 +80,10 @@ export default function SampleChart({ data }: CurrencyChartProps) {
       color: "hsl(var(--chart-3))",
     },
   };
+
+  useEffect(() => {
+    console.log("DATA", chartConfig);
+  }, [chartConfig]);
 
   return (
     <Card>

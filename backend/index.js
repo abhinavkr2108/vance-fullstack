@@ -2,6 +2,7 @@ import puppeteer from "puppeteer";
 import express from "express";
 import cors from "cors";
 import cron from "node-cron";
+import path from "path";
 import { PrismaClient } from "@prisma/client";
 
 const corsOptions = {
@@ -12,6 +13,8 @@ const corsOptions = {
 const PORT = 5000;
 
 const app = express();
+
+const __dirname = path.resolve();
 
 app.use(cors(corsOptions));
 
@@ -219,6 +222,12 @@ pairs.forEach((pair) => {
       console.log(data);
     });
   });
+});
+
+app.use(express.static(path.join(__dirname, "/frontend/out")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "frontend", "out", "index.html"));
 });
 
 app.listen(PORT, () => {

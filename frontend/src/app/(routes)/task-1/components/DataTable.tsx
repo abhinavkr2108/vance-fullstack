@@ -8,7 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { CurrencyData } from "@/lib/types";
 
 interface DataTableProps {
   data: [];
@@ -34,7 +33,7 @@ export default function DataTable({ data }: DataTableProps) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((item: any, index) => (
+          {data.map((item, index) => (
             <TableRow key={index}>
               <TableCell>{item[0]}</TableCell>
               <TableCell>{item[1]}</TableCell>

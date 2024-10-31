@@ -1,13 +1,12 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import Table from "./components/DataTable";
+
 import DataTable from "./components/DataTable";
-import { CurrencyData } from "@/lib/types";
+
 import AboutTask from "./components/AboutTask";
 import {
   Select,
@@ -50,7 +49,6 @@ export default function Task1Page() {
   //Functions
   const fetchData = async () => {
     const quote = `${currencyOne}${currencyTwo}=X`;
-
     toast.promise(
       axios.post("http://localhost:5000/api/scrape", {
         quote,

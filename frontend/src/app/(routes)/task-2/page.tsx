@@ -1,13 +1,9 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-// import Table from "./components/DataTable";
-// import DataTable from "./components/DataTable";
-import { CurrencyData } from "@/lib/types";
 import AboutTask from "./components/AboutTask";
 import {
   Select,
@@ -17,7 +13,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import DataTable from "./components/DataTable";
-import CurrencyChart from "./components/CurrencyChart";
 import SampleChart from "./components/SampleChart";
 import { useCurrencyStore } from "@/store/currencyStore";
 
@@ -25,14 +20,11 @@ export default function Task2Page() {
   //State Variables
   const [currencyOne, setCurrencyOne] = useState("");
   const [currencyTwo, setCurrencyTwo] = useState("");
-  const [fromDate, setFromDate] = useState(new Date());
-  const [toDate, setToDate] = useState(new Date());
   const [currencyData, setCurrencyData] = useState<any>([]);
   const [duration, setDuration] = useState("");
 
   // Zustand Variables
   const setCurrency = useCurrencyStore((state) => state.setCurrencyData);
-  const storedCurrencyData = useCurrencyStore((state) => state.currencyData);
 
   //Other Variables
   const currencies = [
