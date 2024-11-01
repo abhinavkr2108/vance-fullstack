@@ -50,11 +50,14 @@ export default function Task1Page() {
   const fetchData = async () => {
     const quote = `${currencyOne}${currencyTwo}=X`;
     toast.promise(
-      axios.post("https://vance-fullstack.onrender.com/api/scrape", {
-        quote,
-        fromDate: Math.floor(fromDate.getTime() / 1000),
-        toDate: Math.floor(toDate.getTime() / 1000),
-      }),
+      axios.post(
+        "https://vance-backend-c46dd7690e6d.herokuapp.com/api/scrape",
+        {
+          quote,
+          fromDate: Math.floor(fromDate.getTime() / 1000),
+          toDate: Math.floor(toDate.getTime() / 1000),
+        }
+      ),
       {
         loading: "Fetching data...",
         success: (res) => {
