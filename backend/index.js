@@ -52,6 +52,7 @@ app.post("/api/scrape", async (req, res) => {
         "--single-process",
         "--no-zygote",
       ],
+      headless: true,
     });
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "networkidle2" });
@@ -110,6 +111,7 @@ app.post("/api/forex-data", async (req, res) => {
         "--single-process",
         "--no-zygote",
       ],
+      headless: true,
     });
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "networkidle2" });
@@ -206,6 +208,7 @@ async function scrapeData(quote, period) {
       "--single-process",
       "--no-zygote",
     ],
+    headless: true,
   });
   const page = await browser.newPage();
   await page.goto(url, { waitUntil: "networkidle2" });
