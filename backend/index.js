@@ -6,6 +6,7 @@ import path from "path";
 // npx prisma generate
 import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
+import chromium from "chrome-aws-lambda";
 dotenv.config();
 
 const corsOptions = {
@@ -44,11 +45,8 @@ app.post("/api/scrape", async (req, res) => {
 
   try {
     const browser = await puppeteer.launch({
-      executablePath:
-        process.env.NODE_ENV === "production"
-          ? process.env.PUPPETEER_EXECUTABLE_PATH
-          : puppeteer.executablePath(),
-      args: [
+      executablePath: chromium.executablePath,
+      args: chromium.args || [
         "--no-sandbox",
         "--disable-setuid-sandbox",
         "--single-process",
@@ -105,11 +103,8 @@ app.post("/api/forex-data", async (req, res) => {
 
   try {
     const browser = await puppeteer.launch({
-      executablePath:
-        process.env.NODE_ENV === "production"
-          ? process.env.PUPPETEER_EXECUTABLE_PATH
-          : puppeteer.executablePath(),
-      args: [
+      executablePath: chromium.executablePath,
+      args: chromium.args || [
         "--no-sandbox",
         "--disable-setuid-sandbox",
         "--single-process",
@@ -204,11 +199,8 @@ async function scrapeData(quote, period) {
   )}/history?period1=${fromDate}&period2=${toDate}`;
 
   const browser = await puppeteer.launch({
-    executablePath:
-      process.env.NODE_ENV === "production"
-        ? process.env.PUPPETEER_EXECUTABLE_PATH
-        : puppeteer.executablePath(),
-    args: [
+    executablePath: chromium.executablePath,
+    args: chromium.args || [
       "--no-sandbox",
       "--disable-setuid-sandbox",
       "--single-process",
