@@ -2,36 +2,34 @@ import puppeteer from "puppeteer";
 import express from "express";
 import cors from "cors";
 import cron from "node-cron";
-import path from "path";
-// npx prisma generate
-import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
-import chromium from "chrome-aws-lambda";
+import bodyParser from "body-parser";
+
 dotenv.config();
-
-const corsOptions = {
-  origin: "*",
-  optionsSuccessStatus: 200,
-};
-
-const PORT = 5000;
-
 const app = express();
 
-const __dirname = path.resolve();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(
   cors({
-    origin: "*",
+    origin: ["http://localhost:3000", "https://vance-fullstack.vercel.app"],
+    methods: ["GET", "POST", "OPTIONS"],
+    credentials: true,
   })
 );
 
+const PORT = process.env.PORT || 5000;
+
 app.use(express.json());
 
-const prisma = new PrismaClient({
-  log: ["query", "info", "warn", "error"],
-});
+// const prisma = new PrismaClient({
+//   log: ["query", "info", "warn", "error"],
+// });
 
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 app.post("/api/scrape", async (req, res) => {
   const { quote, fromDate, toDate } = req.body;
 
@@ -45,14 +43,9 @@ app.post("/api/scrape", async (req, res) => {
 
   try {
     const browser = await puppeteer.launch({
-      executablePath: chromium.executablePath,
-      args: chromium.args || [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--single-process",
-        "--no-zygote",
-      ],
+      args: ["--no-sandbox", "--disable-setuid-sandbox", "--no-zygote"],
       headless: true,
+      ignoreHTTPSErrors: true,
     });
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "networkidle2" });
@@ -66,25 +59,22 @@ app.post("/api/scrape", async (req, res) => {
       });
     });
 
-    const insertData = data.map((row) => ({
-      date: row[0],
-      open: parseFloat(row[1]),
-      high: parseFloat(row[2]),
-      low: parseFloat(row[3]),
-      close: parseFloat(row[4]),
-      adjClose: parseFloat(row[5]),
-      volume: row[6],
-    }));
+    // const insertData = data.map((row) => ({
+    //   date: row[0],
+    //   open: parseFloat(row[1]),
+    //   high: parseFloat(row[2]),
+    //   low: parseFloat(row[3]),
+    //   close: parseFloat(row[4]),
+    //   adjClose: parseFloat(row[5]),
+    //   volume: row[6],
+    // }));
 
-    const result = await prisma.currency.createMany({
-      data: insertData,
-    });
-
-    console.log("RESULT");
-    console.log(result);
+    // const result = await prisma.currency.createMany({
+    //   data: insertData,
+    // });
+    res.json({ data });
 
     await browser.close();
-    res.json({ data });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error scraping data" });
@@ -104,14 +94,9 @@ app.post("/api/forex-data", async (req, res) => {
 
   try {
     const browser = await puppeteer.launch({
-      executablePath: chromium.executablePath,
-      args: chromium.args || [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--single-process",
-        "--no-zygote",
-      ],
+      args: ["--no-sandbox", "--disable-setuid-sandbox", "--no-zygote"],
       headless: true,
+      ignoreHTTPSErrors: true,
     });
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "networkidle2" });
@@ -125,25 +110,21 @@ app.post("/api/forex-data", async (req, res) => {
       });
     });
 
-    const insertData = data.map((row) => ({
-      date: row[0],
-      open: parseFloat(row[1]),
-      high: parseFloat(row[2]),
-      low: parseFloat(row[3]),
-      close: parseFloat(row[4]),
-      adjClose: parseFloat(row[5]),
-      volume: row[6],
-    }));
+    // const insertData = data.map((row) => ({
+    //   date: row[0],
+    //   open: parseFloat(row[1]),
+    //   high: parseFloat(row[2]),
+    //   low: parseFloat(row[3]),
+    //   close: parseFloat(row[4]),
+    //   adjClose: parseFloat(row[5]),
+    //   volume: row[6],
+    // }));
 
-    const result = await prisma.currency.createMany({
-      data: insertData,
-    });
-
-    console.log("RESULT");
-    console.log(result);
-
-    await browser.close();
+    // const result = await prisma.currency.createMany({
+    //   data: insertData,
+    // });
     res.json({ data });
+    await browser.close();
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error scraping data" });
@@ -201,14 +182,9 @@ async function scrapeData(quote, period) {
   )}/history?period1=${fromDate}&period2=${toDate}`;
 
   const browser = await puppeteer.launch({
-    executablePath: chromium.executablePath,
-    args: chromium.args || [
-      "--no-sandbox",
-      "--disable-setuid-sandbox",
-      "--single-process",
-      "--no-zygote",
-    ],
+    args: ["--no-sandbox", "--disable-setuid-sandbox", "--no-zygote"],
     headless: true,
+    ignoreHTTPSErrors: true,
   });
   const page = await browser.newPage();
   await page.goto(url, { waitUntil: "networkidle2" });
@@ -221,19 +197,19 @@ async function scrapeData(quote, period) {
     });
   });
 
-  const insertData = data.map((row) => ({
-    date: row[0],
-    open: parseFloat(row[1]),
-    high: parseFloat(row[2]),
-    low: parseFloat(row[3]),
-    close: parseFloat(row[4]),
-    adjClose: parseFloat(row[5]),
-    volume: row[6],
-  }));
+  // const insertData = data.map((row) => ({
+  //   date: row[0],
+  //   open: parseFloat(row[1]),
+  //   high: parseFloat(row[2]),
+  //   low: parseFloat(row[3]),
+  //   close: parseFloat(row[4]),
+  //   adjClose: parseFloat(row[5]),
+  //   volume: row[6],
+  // }));
 
-  const result = await prisma.currency.createMany({
-    data: insertData,
-  });
+  // const result = await prisma.currency.createMany({
+  //   data: insertData,
+  // });
 
   await browser.close();
   return data;
@@ -257,12 +233,6 @@ pairs.forEach((pair) => {
       console.log(data);
     });
   });
-});
-
-app.use(express.static(path.join(__dirname, "/frontend/out")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "frontend", "out", "index.html"));
 });
 
 app.listen(PORT, () => {

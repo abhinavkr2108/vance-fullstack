@@ -64,14 +64,11 @@ export default function Task2Page() {
     const quote = `${currencyOne}${currencyTwo}=X`;
 
     toast.promise(
-      axios.post(
-        "https://vance-backend-c46dd7690e6d.herokuapp.com/api/forex-data",
-        {
-          quote,
-          fromDate: Math.floor(fromDate.getTime() / 1000),
-          toDate: Math.floor(toDate.getTime() / 1000),
-        }
-      ),
+      axios.post(" http://localhost:5000/api/forex-data", {
+        quote,
+        fromDate: Math.floor(fromDate.getTime() / 1000),
+        toDate: Math.floor(toDate.getTime() / 1000),
+      }),
       {
         loading: "Fetching data...",
         success: (res) => {
